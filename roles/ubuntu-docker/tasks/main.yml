@@ -1,0 +1,50 @@
+- name: install tools
+  apt: name=\{{item}\} state=present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common
+    - curl
+
+- name: add Docker GPG key
+  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+- name: add Docker Repository
+  command: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+
+- name: retrieve new lists of packages
+  command: apt-get update
+
+- name: install docker
+  apt: name=docker-ce state=present
+
+- name: Create systemd unit file for Docker
+  systemd:
+    name: docker.service
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    content: |
+      [Unit]
+      Description=Docker Application Container Engine
+      Documentation=https://docs.docker.com/engine/reference/commandline/dockerd/
+      After=network-online.target firewalld.service containerd.service
+      Wants=network-online.target
+
+      [Service]
+      Type=notify
+      ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --data-root=/data/docker
+      ExecReload=/bin/kill -s HUP $MAINPID
+      LimitNOFILE=infinity
+      LimitNPROC=infinity
+      LimitCORE=infinity
+      TasksMax=infinity
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: get docker-compose
+  shell: curl -L https://github.com/docker/compose/releases/download/2.17.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+
+- name: install docker-compose
+  command: chmod +x /usr/local/bin/docker-compose 

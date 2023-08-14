@@ -1,0 +1,5 @@
+- name: Copy docker-compose.yaml          
+  copy: src=/opt/jenkins/task/dev/docker-compose.yaml dest=/opt/docker-compose/saas/docker-compose.yaml
+
+- name: restart docker-compose.yaml
+  shell: docker-compose -f /opt/docker-compose/saas/docker-compose.yaml up -d

@@ -1,0 +1,7 @@
+  - hosts: '{{host}}'
+    gather_facts: false
+    tasks:
+    - name: change user passwd
+      user: name={{ item.name }} password={{ item.chpass | password_hash('sha512') }}  update_password=always
+      with_items:
+           - { name: 'root', chpass: 'Csih@2021' }

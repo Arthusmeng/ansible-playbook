@@ -1,0 +1,8 @@
+---
+- hosts: "{{ host }}"
+  vars:
+    user1: dev
+    password: "Abcd@1234"
+  remote_user: root
+  roles:
+    - useradd

@@ -1,0 +1,158 @@
+
+
+filebeat.inputs:
+
+- type: log
+  enabled: true
+  tail_files: true
+  backoff: "1s"
+  paths:
+      - /opt/nginx/logs/*.log
+  fields:
+    filetype: dev_nginx_log
+  fields_under_root: true
+
+- type: log
+  enabled: true
+  tail_files: true
+  backoff: "1s"
+  paths:
+      - /opt/csihapp/logs/clinic_appointment_admin-1.0-SNAPSHOT.log
+  tags: [clinic_appointment_admin]
+  fields:
+    filetype: dev_app_log
+    env: dev
+  fields_under_root: true
+  multiline.pattern: ^\[
+  multiline.negate: true
+  multiline.match: after
+
+- type: log
+  enabled: true
+  tail_files: true
+  backoff: "1s"
+  paths:
+      - /opt/csihapp/logs/csih-yancon-admin-1.0-SNAPSHOT.log
+  tags: [csih-yancon-admin]
+  fields:
+    filetype: dev_app_log
+    env: dev
+  fields_under_root: true
+  multiline.pattern: ^\[
+  multiline.negate: true
+  multiline.match: after
+
+- type: log
+  enabled: true
+  tail_files: true
+  backoff: "1s"
+  paths:
+      - /opt/csihapp/logs/csih-yancon-admin-center-1.0-SNAPSHOT.log
+  tags: [csih-yancon-admin-center]
+  fields:
+    filetype: dev_app_log
+    env: dev
+  fields_under_root: true
+  multiline.pattern: ^\[
+  multiline.negate: true
+  multiline.match: after
+
+- type: log
+  enabled: true
+  tail_files: true
+  backoff: "1s"
+  paths:
+      - /opt/csihapp/logs/csih-yancon-center-1.0-SNAPSHOT.log
+  tags: [csih-yancon-center]
+  fields:
+    filetype: dev_app_log
+    env: dev
+  fields_under_root: true
+  multiline.pattern: ^\[
+  multiline.negate: true
+  multiline.match: after
+
+- type: log
+  enabled: true
+  tail_files: true
+  backoff: "1s"
+  paths:
+      - /opt/csihapp/logs/csih-yancon-minipro-1.0-SNAPSHOT.log
+  tags: [csih-yancon-minipro]
+  fields:
+    filetype: dev_app_log
+    env: dev
+  fields_under_root: true
+  multiline.pattern: ^\[
+  multiline.negate: true
+  multiline.match: after
+
+- type: log
+  enabled: true
+  tail_files: true
+  backoff: "1s"
+  paths:
+      - /opt/csihapp/logs/csih-yancon-wechat-1.0-SNAPSHOT.log
+  tags: [csih-yancon-wechat]
+  fields:
+    filetype: dev_app_log
+    env: dev
+  fields_under_root: true
+  multiline.pattern: ^\[
+  multiline.negate: true
+  multiline.match: after
+
+- type: log
+  enabled: true
+  tail_files: true
+  backoff: "1s"
+  paths:
+      - /opt/csihapp/logs/oa-yancon-common-1.0-SNAPSHOT.log
+  tags: [oa-yancon-common]
+  fields:
+    filetype: dev_app_log
+    env: dev
+  fields_under_root: true
+  multiline.pattern: ^\[
+  multiline.negate: true
+  multiline.match: after
+
+- type: log
+  enabled: true
+  tail_files: true
+  backoff: "1s"
+  paths:
+      - /opt/csihapp/logs/xxl-job-admin-2.2.0.log
+  tags: [xxl-job-admin]
+  fields:
+    filetype: dev_app_log
+    env: dev
+  fields_under_root: true
+  multiline.pattern: ^\[
+  multiline.negate: true
+  multiline.match: after
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+  #reload.period: 10s
+setup.template.settings:
+  index.number_of_shards: 1
+  #index.codec: best_compression
+  #_source.enabled: false
+setup.kibana:
+
+output.logstash:
+  hosts: ["172.28.4.150:5044"]
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
+  - drop_fields:
+       fields: ["log","input","host","agent","ecs"]
+
+
+
+

@@ -1,0 +1,185 @@
+version: '3.3'
+
+services:
+  gateway-manager:
+    image: harbor.xxx.cn/xxx/xxx-gateway-manager:1be18a4
+    container_name: xxx-gateway-manager
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx128m"
+    ports:
+      - "8081:8080"
+    restart: "always"
+    networks:
+      - saas
+    extra_hosts:
+     - "nacos1:172.23.255.60"
+     - "nacos2:172.23.255.60"
+     - "nacos3:172.23.255.60"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 172.23.255.60:24224
+        tag: xxx-gateway-manager
+
+  services-yancon:
+    image: harbor.xxx.cn/xxx/xxx-services-yancon:70fa99f
+    container_name: xxx-services-yancon
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx128m"
+    ports:
+      - "8082:8080"
+    restart: "always"
+    networks:
+      - saas
+    extra_hosts:
+     - "nacos1:172.23.255.60"
+     - "nacos2:172.23.255.60"
+     - "nacos3:172.23.255.60"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 172.23.255.60:24224
+        tag: xxx-services-yancon
+  
+  services-dict:
+    image: harbor.xxx.cn/xxx/xxx-services-dict:974020f
+    container_name: xxx-services-dict
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx128m"
+    ports:
+      - "8083:8080"
+    restart: "always"
+    networks:
+      - saas
+    extra_hosts:
+     - "nacos1:172.23.255.60"
+     - "nacos2:172.23.255.60"
+     - "nacos3:172.23.255.60"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 172.23.255.60:24224
+        tag: xxx-services-dict
+
+  services-manager:
+    image: harbor.xxx.cn/xxx/xxx-services-manager:b74fb41
+    container_name: xxx-services-manager
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx128m"
+    ports:
+      - "8084:8080"
+    restart: "always"
+    networks:
+      - saas
+    extra_hosts:
+     - "nacos1:172.23.255.60"
+     - "nacos2:172.23.255.60"
+     - "nacos3:172.23.255.60"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 172.23.255.60:24224
+        tag: xxx-services-manager
+
+  gateway-client:
+    image: harbor.xxx.cn/xxx/xxx-gateway-client:a1ca0f9
+    container_name: xxx-gateway-client
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx128m"
+    ports:
+      - "8085:8080"
+    restart: "always"
+    networks:
+      - saas
+    extra_hosts:
+     - "nacos1:172.23.255.60"
+     - "nacos2:172.23.255.60"
+     - "nacos3:172.23.255.60"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 172.23.255.60:24224
+        tag: xxx-gateway-client
+
+  services-archive:
+    image: harbor.xxx.cn/xxx/xxx-services-archive:3ea1676
+    container_name: xxx-services-archive
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx128m"
+    ports:
+      - "8086:8080"
+    restart: "always"
+    networks:
+      - saas
+    extra_hosts:
+     - "nacos1:172.23.255.60"
+     - "nacos2:172.23.255.60"
+     - "nacos3:172.23.255.60"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 172.23.255.60:24224
+        tag: xxx-services-archive
+
+  services-wechat:
+    image: harbor.xxx.cn/xxx/xxx-services-wechat:60367c7
+    container_name: xxx-services-wechat
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx128m"
+    ports:
+      - "8087:8080"
+    restart: "always"
+    networks:
+      - saas
+    extra_hosts:
+     - "nacos1:172.23.255.60"
+     - "nacos2:172.23.255.60"
+     - "nacos3:172.23.255.60"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 172.23.255.60:24224
+        tag: xxx-services-wechat
+
+  services-statistics:
+    image: harbor.xxx.cn/xxx/xxx-services-statistics:60367c7
+    container_name: xxx-services-statistics
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx128m"
+    ports:
+      - "8091:8080"
+    restart: "always"
+    networks:
+      - saas
+    extra_hosts:
+     - "nacos1:172.23.255.60"
+     - "nacos2:172.23.255.60"
+     - "nacos3:172.23.255.60"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 172.23.255.60:24224
+        tag: xxx-services-wechat
+
+  xxl-job:
+    image: harbor.xxx.cn/xxx/xxx-xxl-job:233a886
+    container_name: xxx-xxl-job
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx128m"
+    ports:
+      - "8090:8083"
+    restart: "always"
+    networks:
+      - saas
+    extra_hosts:
+     - "nacos1:172.23.255.60"
+     - "nacos2:172.23.255.60"
+     - "nacos3:172.23.255.60"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 172.23.255.60:24224
+        tag: xxx-xxl-job
+networks:
+  saas:
+    driver: bridge

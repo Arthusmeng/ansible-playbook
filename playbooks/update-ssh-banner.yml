@@ -1,0 +1,8 @@
+#
+#This will update ssh banner
+#
+---
+- hosts: '{{host}}'
+  become: yes
+  roles:
+  - ssh-banner

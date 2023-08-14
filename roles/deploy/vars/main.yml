@@ -1,0 +1,9 @@
+---
+ gateway-manage: "{{gateway-manage|default('gateway-manage:master')}}"
+ services-yancon: "{{services-yancon|default('services-yancon:master')}}"
+ services-dict: "{{services-dict|default('services-dict:master')}}"
+ services-manager: "{{services-manager|default('services-manager:master')}}"
+ gateway-client: "{{gateway-client|default('gateway-client:master')}}"
+ services-archive: "{{services-archiven|default('services-archive:master')}}"
+ services-wechat: "{{services-wechat|default('services-wechat:master')}}"
+ 
