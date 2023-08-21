@@ -5,4 +5,10 @@
     - name: ssh-copy
       authorized_key: user=root key="{{ lookup('file','/root/.ssh/id_rsa.pub') }}" state=present
       tags:
-        - sshkey
+        - centos
+
+  # tasks:
+  #   - name: ssh-copy
+  #     authorized_key: user=root key="{{ lookup('file','/Users/arthus.meng/.ssh/id_rsa.pub') }}" state=present
+  #     tags:
+  #       - macos

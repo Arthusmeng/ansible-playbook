@@ -67,4 +67,6 @@
 [example-prod]
 0.0.0.0	 ansible_host=0.0.0.0
 
-
+### helmett-test ### 
+[helmett-test]
+116.233.205.49 ansible_host=4.178.105.10 ansible_ssh_port=22 ansible_ssh_pass="Z_nR_BTWQCTC8IVX_cHM"
